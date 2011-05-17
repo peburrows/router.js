@@ -1,14 +1,31 @@
 ## Usage
 
-  // create a router
-  var router = new Router();
 
-  // define routes
-  router.define('/hello/world', function(){
-    // `this` refers to the request inside of the handler
-    if(this.method == 'GET'){ alert('hello, world'); }
-    else                    { alert('hello, world via ' + this.method); }
-  });
+    // create a router
+    var router = new Router();
+
+    // define routes
+    router.define('/hello/world', function(){
+      // `this` refers to the request inside of the handler
+      if(this.method == 'GET'){ alert('hello, world'); }
+      else                    { alert('hello, world via ' + this.method); }
+    }).resources('users', {
+      show    : function(){
+        $.get(this.path, this.queryParams, function(data) {
+          $('#wrapper').html(data);
+        });
+      },
+      index   : function(){
+        // load users...
+      },
+      edit    : function(){
+        // load the edit user form
+      }
+    }).catchAll(function(){
+      // all requests that do not match route will be passed to this handler
+    }).default(function(){
+      // the default route to push on initial page load
+    });
 
 ## Requirements
 
