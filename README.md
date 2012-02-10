@@ -1,6 +1,6 @@
 ## Usage
 
-
+```javascript
     // create a router
     var router = new Router();
 
@@ -26,6 +26,7 @@
     }).default(function(){
       // the default route to push on initial page load
     });
+```
 
 ## Requirements
 
