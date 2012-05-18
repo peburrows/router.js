@@ -6,6 +6,7 @@ function Router(){
     var url = $.url.setUrl(path),
         self = this;
 
+    this.fullPath     = path;
     this.queryString  = url.attr('query');
     this.path         = url.attr('path');
     this.queryParams  = url.param();
@@ -127,16 +128,14 @@ Router.prototype.resources = function(resource, handlers){
     var parts = resource.split('/');
     for (var i=0; i < parts.length; i++) {
       if( i+1 != parts.length){
-        // this is ugly, but for now, just drop the last character
-        // if it ends in an 's' to handle pluralized names
-        parts[i] = parts[i] + '/:' + parts[i].replace(/s$/, '') + '_id';
+        // this is rudimentary, but for now, just drop the last character
+        parts[i] = parts[i] + '/:' + parts[i].slice(0, -1) + '_id';
       }
     };
     resource = parts.join('/');
   }
 
   resource = '/' + resource;
-  // should probably change to case statement
   for(var action in handlers){
     if(/show/.test(action)){
       self.define(resource + '/:id', handlers[action]);
@@ -144,10 +143,6 @@ Router.prototype.resources = function(resource, handlers){
       self.define(resource, handlers[action]);
     }else if(/edit/.test(action)){
       self.define(resource + '/:id/edit', handlers[action]);
-    }else if(/update/.test(action)){
-      self.define(resource + '/:id/update', handlers[action]);
-    }else if(/delete/.test(action)){
-      self.define(resource + '/:id/delete', handlers[action]);
     }
   }
 
