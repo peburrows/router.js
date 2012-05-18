@@ -143,8 +143,11 @@ Router.prototype.resources = function(resource, handlers){
       self.define(resource, handlers[action]);
     }else if(/edit/.test(action)){
       self.define(resource + '/:id/edit', handlers[action]);
+    }else if(/update/.test(action)){  	
+      self.define(resource + '/:id/update', handlers[action]);	
+    }else if(/delete/.test(action)){
+      self.define(resource + '/:id/delete', handlers[action]);
     }
-  }
 
   // return this so we can chain methods
   return this;
